@@ -34,3 +34,8 @@ INSERT INTO ref_rounds VALUES (NEXTVAL('ref_rounds_round_id_seq'), 'Quarter Fina
 INSERT INTO ref_rounds VALUES (NEXTVAL('ref_rounds_round_id_seq'), 'Semi Final');
 INSERT INTO ref_rounds VALUES (NEXTVAL('ref_rounds_round_id_seq'), 'Final');
 --rollback SELECT 1;
+
+--changeset Swaroop:SportsReferenceTableDataGeneration(dbms:postgresql failOnError:true splitStatements:false)
+INSERT INTO ref_sports VALUES (NEXTVAL('ref_sports_sport_id_seq'), 'Cricket');
+INSERT INTO ref_sports VALUES (NEXTVAL('ref_sports_sport_id_seq'), 'Tennis');
+--rollback SELECT 1;
