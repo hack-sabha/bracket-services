@@ -14,12 +14,19 @@ CREATE TABLE ref_rounds (
 );
 --rollback SELECT 1;
 
+--changeset Swaroop:SportsReferenceTableGeneration(dbms:postgresql failOnError:true splitStatements:false)
+CREATE TABLE ref_sports (
+  sport_id BIGSERIAL PRIMARY KEY,
+  name     TEXT NOT NULL
+);
+--rollback SELECT 1;
+
 --changeset Swaroop:BracketSchemaGeneration(dbms:postgresql failOnError:true splitStatements:false)
 CREATE TABLE brackets (
   bracket_id        BIGSERIAL PRIMARY KEY,
   name              TEXT    NOT NULL,
   type              INTEGER NOT NULL,
-  sport             INTEGER,
+  sport_id          BIGINT REFERENCES ref_sports (sport_id),
   participant_count INTEGER NOT NULL DEFAULT 0
 );
 

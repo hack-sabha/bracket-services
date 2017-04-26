@@ -6,6 +6,7 @@ This project needs a Postgres DB. So, spin up a postgres DB container
 * Open terminal at the project folder
 * `docker build -t postgres docker`
 * `docker run -di -p 32222:5432 postgres`
+* Can verify the status of the container with `docker ps` or can view the details in Kitematic.
 
 ## Test DB Connection
 You can check your DB connection with 
@@ -18,3 +19,10 @@ You can check your DB connection with
 
 ## Database Schema
 <img src="https://github.com/hack-sabha/bracket-services/blob/master/documents/schema.png" alt="Bracket Schema" width="60%" height="80%">
+
+## Helpful Intellij Plugins & Tips
+* Plugin for generating serialVersionUID for classes that are Serializable
+** `File > Settings > Plugins > Browse repositories > GenerateSerialVersionUID`
+
+
+
