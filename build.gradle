@@ -4,15 +4,20 @@ buildscript {
     }
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath('net.saliman:gradle-cobertura-plugin:2.4.0')
+        classpath('org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3')
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
+apply plugin: 'cobertura'
+apply plugin: 'com.github.kt3k.coveralls'
 
 version = '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
@@ -24,6 +29,8 @@ repositories {
 configurations {
     providedRuntime
 }
+
+cobertura.coverageFormats = ['html', 'xml']
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-actuator')

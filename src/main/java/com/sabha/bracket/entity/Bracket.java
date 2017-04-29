@@ -21,7 +21,7 @@ public class Bracket implements Serializable {
     private String name;
     private int type;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "sport_id")
     private Sport sport;
 
