@@ -31,10 +31,15 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.liquibase:liquibase-core')
+    compile('com.google.guava:guava:21.0')
 
     runtime('org.postgresql:postgresql')
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 
+    testCompile('io.rest-assured:json-schema-validator:3.0.2')
+    testCompile('io.rest-assured:rest-assured:3.0.2')
+    testCompile('io.rest-assured:spring-mock-mvc:3.0.2')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+    testCompile('org.hsqldb:hsqldb')
 }
