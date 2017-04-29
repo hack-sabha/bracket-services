@@ -1,16 +1,16 @@
-package com.sabha.bracket.entity;
+package com.tpark.tournament.entity;
 
-
-import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Entity object for 'sports' table.
- *
- * @author Swaroop Gaddameedhi
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
 @Entity
-@Table(name = "sports")
+@Table(name = "ref_sports")
 public class Sport implements Serializable {
     @Id
     @GeneratedValue

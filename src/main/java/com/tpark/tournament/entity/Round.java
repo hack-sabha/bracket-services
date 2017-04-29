@@ -1,16 +1,16 @@
 /**
  * @author Swaroop Gaddameedhi.
  */
-package com.sabha.bracket.entity;
+package com.tpark.tournament.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Entity object for 'ref_round' table.
- *
- * @author Swaroop Gaddameedhi
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 @Entity
 @Table(name = "ref_rounds")
 public class Round implements Serializable {

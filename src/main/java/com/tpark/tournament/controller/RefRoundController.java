@@ -1,14 +1,14 @@
-package com.sabha.bracket.controller;
+package com.tpark.tournament.controller;
 
+import java.util.List;
 
-import com.sabha.bracket.dataaccess.RefRoundRepository;
-import com.sabha.bracket.entity.Round;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.tpark.tournament.dataaccess.RefRoundRepository;
+import com.tpark.tournament.entity.Round;
 
 @RestController
 @EnableAutoConfiguration
