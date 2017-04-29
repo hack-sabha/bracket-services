@@ -5,12 +5,14 @@ import com.sabha.bracket.entity.Bracket;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * REST controller for Search related APIs.
@@ -32,10 +34,11 @@ public class BracketSearchController {
      * @param term The search term to be used for searching brackets.
      * @return Collection of potentially matching brackets.
      */
-    @RequestMapping(method = RequestMethod.GET, params = {"term"})
+    @RequestMapping(method = RequestMethod.GET, params = {"term"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Collection<Bracket> search(@RequestParam(value = "term") String term) {
         LOGGER.info(String.format("Searching for searchTerm[%s]....", term));
-        return this.bracketRepository.findAll();
+        List<Bracket> result = this.bracketRepository.findAll();
+        return result;
     }
 
     /**
