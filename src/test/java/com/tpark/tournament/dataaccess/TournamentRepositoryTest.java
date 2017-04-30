@@ -39,7 +39,7 @@ public class TournamentRepositoryTest {
         tournamentRepository.save(expectedBracket);
         assertThat(expectedBracket.getTournamentId(), notNullValue());
 
-        Collection<Tournament> searchResults = tournamentRepository.findByName("TestBracket");
+        Collection<Tournament> searchResults = tournamentRepository.findByNameIgnoreCaseContaining("TestBracket");
         assertEquals(1, searchResults.size());
     }
 }

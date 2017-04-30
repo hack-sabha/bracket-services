@@ -37,8 +37,7 @@ public class TournamentSearchController {
     @RequestMapping(method = RequestMethod.GET, params = { "term" }, produces = { MediaType.APPLICATION_JSON_VALUE })
     public Collection<Tournament> search(@RequestParam(value = "term") String term) {
         LOGGER.info(String.format("Searching for searchTerm[%s]....", term));
-        List<Tournament> result = this.tournamentRepository.findAll();
-        return result;
+        return this.tournamentRepository.findByNameIgnoreCaseContaining(term);
     }
 
 }
