@@ -8,6 +8,8 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.tpark.tournament.controller.TournamentController;
+import com.tpark.tournament.controller.TournamentParticipantGroupController;
 import com.tpark.tournament.controller.TournamentSearchController;
 
 /**
@@ -24,6 +26,7 @@ public class TournamentServicesApplication extends SpringBootServletInitializer 
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(TournamentServicesApplication.class, TournamentSearchController.class);
+        return application.sources(TournamentServicesApplication.class, TournamentSearchController.class, TournamentController.class,
+        TournamentParticipantGroupController.class);
     }
 }

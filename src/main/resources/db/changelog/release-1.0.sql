@@ -32,7 +32,7 @@ CREATE TABLE tournaments (
 
 CREATE TABLE tournament_teams (
   team_id    BIGSERIAL PRIMARY KEY,
-  tournament_id BIGINT REFERENCES tournaments (tournament_id),
+  tournament_id BIGINT REFERENCES tournaments (tournament_id) NOT NULL,
   team_name  TEXT NOT NULL,
   seed       INTEGER,
   UNIQUE (tournament_id, team_name)
@@ -40,9 +40,9 @@ CREATE TABLE tournament_teams (
 
 CREATE TABLE tournament_participants (
   participant_id   BIGSERIAL PRIMARY KEY,
-  tournament_id       BIGINT REFERENCES tournaments (tournament_id),
+  tournament_id    BIGINT REFERENCES tournaments (tournament_id) NOT NULL,
   participant_name TEXT NOT NULL,
-  team_id          TEXT NOT NULL,
+  team_id          BIGINT REFERENCES tournament_teams(team_id),
   seed             INTEGER,
   UNIQUE (tournament_id, participant_id)
 );

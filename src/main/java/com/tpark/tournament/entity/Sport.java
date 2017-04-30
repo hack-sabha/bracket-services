@@ -8,10 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "ref_sports")
 public class Sport implements Serializable {
+
+    private static final long serialVersionUID = -4573084748046627444L;
     @Id
     @GeneratedValue
     @Column(name = "sport_id")
@@ -37,6 +38,6 @@ public class Sport implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Sport[id=%d name=%s]", sportId, name);
+        return "Sport{" + "sportId=" + sportId + ", name='" + name + '\'' + '}';
     }
 }

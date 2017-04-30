@@ -37,7 +37,7 @@ public class TournamentRepositoryTest {
         Sport expectedSport = new Sport("TestSport");
         Tournament expectedBracket = new Tournament("TestBracket", 0, expectedSport, 0);
         tournamentRepository.save(expectedBracket);
-        assertThat(expectedBracket.getTournamentId(), notNullValue());
+        assertThat(expectedBracket.getId(), notNullValue());
 
         Collection<Tournament> searchResults = tournamentRepository.findByNameIgnoreCaseContaining("TestBracket");
         assertEquals(1, searchResults.size());

@@ -14,7 +14,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ref_rounds")
 public class Round implements Serializable {
-    private static final long serialVersionUID = -5567199720265976935L;
+
+    private static final long serialVersionUID = -2148865698626570214L;
     @Id
     @GeneratedValue
     @Column(name = "round_id")
@@ -40,6 +41,6 @@ public class Round implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Round[id=%d name=%s]", roundId, roundName);
+        return "Round{" + "roundId=" + roundId + ", roundName='" + roundName + '\'' + '}';
     }
 }

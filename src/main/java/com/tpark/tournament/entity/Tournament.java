@@ -8,23 +8,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tournaments")
 public class Tournament implements Serializable {
     private static final long serialVersionUID = -1347292377449136017L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tournament_id")
-    private long tournamentId;
+    private long id;
 
     private String name;
     private int type;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "sport_id")
     private Sport sport;
 
@@ -41,8 +40,8 @@ public class Tournament implements Serializable {
         this.participantCount = participantCount;
     }
 
-    public long getTournamentId() {
-        return tournamentId;
+    public long getId() {
+        return id;
     }
 
     public String getName() {
@@ -63,6 +62,7 @@ public class Tournament implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Tournament[id=%d name=%s type= sport=%s partipantCount=%d]", tournamentId, name, type, sport.getName(), participantCount);
+        return "Tournament{" + "id=" + id + ", name='" + name + '\'' + ", type=" + type + ", sport=" + sport + ", participantCount=" + participantCount + '}';
     }
+
 }
