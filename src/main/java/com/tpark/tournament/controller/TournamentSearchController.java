@@ -1,5 +1,6 @@
 package com.tpark.tournament.controller;
 
+
 import java.util.Collection;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import com.tpark.tournament.entity.Tournament;
  */
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/tournaments/search")
+@RequestMapping("/tournaments")
 public class TournamentSearchController {
     private static Logger LOGGER = Logger.getLogger(TournamentSearchController.class);
 
@@ -30,14 +31,25 @@ public class TournamentSearchController {
     /**
      * Searches for tournaments that match a provided search term.
      *
-     * @param term
-     *            The search term to be used for searching tournaments.
+     * @param term The search term to be used for searching tournaments.
      * @return Collection of potentially matching tournaments.
      */
-    @RequestMapping(method = RequestMethod.GET, params = { "term" }, produces = { MediaType.APPLICATION_JSON_VALUE })
+    @RequestMapping(method = RequestMethod.GET, value = "/search", params = {"term"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Collection<Tournament> search(@RequestParam(value = "term") String term) {
         LOGGER.info(String.format("Searching for searchTerm[%s]....", term));
         return this.tournamentRepository.findByNameIgnoreCaseContaining(term);
+    }
+
+
+    /**
+     * Retrieves all tournaments.
+     *
+     * @return List of all tournaments in DB.
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/all")
+    public List<Tournament> getAllTournaments() {
+        LOGGER.info("Retrieving all tournaments...");
+        return this.tournamentRepository.findAll();
     }
 
 }

@@ -22,4 +22,4 @@ COPY entrypoint.sh /
 RUN chmod 755 /entrypoint.sh
 ENTRYPOINT sudo /entrypoint.sh
 
-ENV POSTGRES_DB brackets
+ENV POSTGRES_DB tournaments

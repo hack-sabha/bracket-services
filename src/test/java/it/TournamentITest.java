@@ -36,6 +36,7 @@ public class TournamentITest {
     @Autowired
     private TestRestTemplate template;
 
+    // TODO This works in local but fails on Travis :(
     Map<Long, Tournament> tournamentByIdMap;
 
     @Before
@@ -52,21 +53,21 @@ public class TournamentITest {
     @Test
     public void retrieveSingleTournament() {
         // end-to-end test
-        ResponseEntity<String> response = template.getForEntity("/tournaments/search?term=TestBracket", String.class);
+        ResponseEntity<String> response = template.getForEntity("/tournaments/search?term=TestTournament", String.class);
         LOGGER.info("------ RESPONSE ------\n" + response);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
-        assertThat(response.getBody(), containsString("TestBracket"));
+        assertThat(response.getBody(), containsString("TestTournament"));
     }
 
     @Test
     public void retrieveMultipleTournaments() {
         createTournament("Tennis");
         // end-to-end test
-        ResponseEntity<String> response = template.getForEntity("/tournaments/search?term=TestBracket", String.class);
+        ResponseEntity<String> response = template.getForEntity("/tournaments/search?term=TestTournament", String.class);
         LOGGER.info("------ RESPONSE ------\n" + response);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
-        assertThat(response.getBody(), containsString("TestBracketCricket"));
-        assertThat(response.getBody(), containsString("TestBracketTennis"));
+        assertThat(response.getBody(), containsString("TestTournamentCricket"));
+        assertThat(response.getBody(), containsString("TestTournamentTennis"));
     }
 
     public void createTournament(String sportName) {
@@ -74,10 +75,11 @@ public class TournamentITest {
         Collection<Sport> sports = refSportRepository.findByName(sportName);
         Sport sport = sports.iterator().next();
 
-        // Creating a test Bracket object
-        Tournament tournament = new Tournament("TestBracket" + sportName, 1, sport, 1);
+        // Creating a test Tournament object
+        Tournament tournament = new Tournament("TestTournament" + sportName, 1, sport, 1);
         tournamentRepository.save(tournament);
-        tournamentByIdMap.put(tournament.getTournamentId(), tournament);
+        System.out.println(tournament.toString());
+        //tournamentByIdMap.put(tournament.getTournamentId(), tournament);
     }
 
     public void deleteTournament(Collection<Long> tournamentIds) {

@@ -5,20 +5,25 @@ buildscript {
     repositories {
         mavenCentral()
         jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath('net.saliman:gradle-cobertura-plugin:2.4.0')
         classpath('org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3')
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.4"
     }
 }
-
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
 apply plugin: 'cobertura'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: "org.sonarqube"
+apply plugin: "jacoco"
 
 version = '0.1.0-SNAPSHOT'
 sourceCompatibility = 1.8
@@ -51,4 +56,14 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
     testCompile('org.hsqldb:hsqldb')
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "Java :: Tournament Park :: Tournament-Services"
+        property "sonar.host.url", "https:/sonarqube.com"
+        property "sonar.organization", "swaroopg-github"
+        property "sonar.login", "58a16cb35ec483abf7448919003da7587ebc83ee"
+        property "sonar.jacoco.reportPaths", "$buildDir/jacoco/jacocoTest.exec"
+    }
 }

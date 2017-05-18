@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -25,7 +26,7 @@ import com.tpark.tournament.entity.Tournament;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@EntityScan("com.sabha.bracket.entity")
+@EntityScan("com.tpark.tournament.entity")
 @ContextConfiguration(classes = { TournamentRepository.class, RefRoundRepository.class })
 public class TournamentRepositoryTest {
     @Autowired
@@ -35,11 +36,11 @@ public class TournamentRepositoryTest {
     @Test
     public void testFindByName() {
         Sport expectedSport = new Sport("TestSport");
-        Tournament expectedBracket = new Tournament("TestBracket", 0, expectedSport, 0);
-        tournamentRepository.save(expectedBracket);
-        assertThat(expectedBracket.getId(), notNullValue());
+        Tournament expectedTournament = new Tournament("TestTournament", 0, expectedSport, 0);
+        tournamentRepository.save(expectedTournament);
+        assertThat(expectedTournament.getId(), notNullValue());
 
-        Collection<Tournament> searchResults = tournamentRepository.findByNameIgnoreCaseContaining("TestBracket");
+        Collection<Tournament> searchResults = tournamentRepository.findByNameIgnoreCaseContaining("TestTournament");
         assertEquals(1, searchResults.size());
     }
 }
