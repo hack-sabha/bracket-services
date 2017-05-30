@@ -1,18 +1,30 @@
 dist: trusty
 sudo: required
+services:
+  - postgresql
 addons:
-    postgresql: "9.5"
+  postgresql: "9.6"
 before_script:
   - sudo psql -U postgres -c "ALTER USER postgres WITH PASSWORD 'sabha123'"
   - sudo psql -U postgres -c 'CREATE DATABASE tournaments'
-
-language:
-    java
+language: java
 jdk:
-    - oraclejdk8
+  - oraclejdk8
 env:
+  matrix:
     - TERM=dumb
+  global:
+    - COMMIT=${TRAVIS_COMMIT::8}
+    - REPO=swarooprajg/tourpark-postgres
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
 script:
-    - gradle clean build sonarqube
+  - docker build -t $REPO:$COMMIT docker
+before_install:
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
 after_success:
-    - gradle cobertura coveralls
+  - eval $(aws ecr get-login --region us-east-1)
+  - docker images
+  - docker push $REPO:$COMMIT
+
