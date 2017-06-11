@@ -13,6 +13,15 @@ jdk:
 env:
     - TERM=dumb
 script:
-    - gradle clean build sonarqube
+    - gradle build
 after_success:
-    - gradle cobertura coveralls
+    deploy:
+      skip_cleanup: true
+      provider: elasticbeanstalk
+      access-key-id: AKIAIV4EWOC3ZDFD2NUA
+      secret-access-key: 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
+      region: us-west-2
+      app: tournament-services
+      env: tournamentServices-env
+      bucket_name: us-west-2.elasticbeanstalk.com
+      zip_file: 'build/libs/tournament-services-0.1.0-SNAPSHOT.war'
