@@ -59,3 +59,10 @@ CREATE TABLE tournament_matches (
   UNIQUE (tournament_id, match_seq)
 );
 --rollback SELECT 1;
+
+--changeset Vinay:RefTournamentTypesGeneration(dbms:postgresql failOnError:true splitStatements:false)
+CREATE TABLE ref_tournament_types (
+  tournament_type_id BIGSERIAL PRIMARY KEY,
+  name TEXT NOT NULL
+);
+--rollback SELECT 1;
