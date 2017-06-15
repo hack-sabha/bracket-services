@@ -1,18 +1,31 @@
 dist: trusty
 sudo: required
+services:
+- postgresql
 addons:
-    postgresql: "9.5"
+  postgresql: '9.6'
 before_script:
-  - sudo psql -U postgres -c "ALTER USER postgres WITH PASSWORD 'sabha123'"
-  - sudo psql -U postgres -c 'CREATE DATABASE tournaments'
-
-language:
-    java
+- sudo psql -U postgres -c "ALTER USER postgres WITH PASSWORD 'sabha123'"
+- sudo psql -U postgres -c 'CREATE DATABASE tournaments'
+language: java
 jdk:
-    - oraclejdk8
+- oraclejdk8
 env:
-    - TERM=dumb
+  matrix:
+  - TERM=dumb
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  global:
+  - secure: fKeojw1bWFkIMKOzRWIYKmt/um42VcUCNzq5alVnP03iJykaSQ5aklNkZVY/ztzMKBfB49ma43yBOD+j9xclr6l4mJ5hejgCuUo1GfPfwLG6xZPHbfo//p7yH4vgQT+AYruApJREuaDuYSW1CEze1NaWDlhvPpcF4+/8zoaaDGVf1vu3k4exg1lDttSsidOmB3+yOAS9oqo8HjtuV2oWTDrJZbqSo5QW34PHr0JbFK5kHUmzk6V69wG2+XCV3DI/6W7weIJBH3LOxdA9kKDGeMqPC9q54nacJUEfZhP//MPz+/HA2MLz22mrJPqfsefH12xrVWsh+KOrvlHJuskxIjdgv9BEECjPcqLRSwaSNW5izBkbn5AQYnkmY7cUJiskillzi6JaXDp1bBbyAgIQhoNZqBK2rhlt8sB85ZNO9t4bKTrvM+1yvLTjwbI98m0CHqeW7hTREB/BAI96ErSEyCPDj5/KsvhysplvXLbIpZaT+BOume4Vm7M6y/O5alRCt4RoEcH1eMqYf3MjmLEQpJZCMkIyOpUOtf5LAspZkoYykHGmAftzvNCtdje2+eLcUhJmHzn9oMEK/ofskxdXzl9F9g2ZnWYUwW0L6DrTuyKPsVI1hybFq5veof1IRebQnCFe+B7IoBe3xzHSxOTrXo5KFnFWL2sPXIJvuNY5Tp4=
+  - secure: lie+51JSuXctIBKa5WBilUkuLF5VWyCn8YJ2mRCAfEXb9NwKTtxZ4w2trxEDg8bHNsB9/v7wB0AUxE5u8VH/yRDE58y2ipULaCGWFiX2S2sNeXynkeSM3aOeDEHR8owy92Vt6jQ3lpA+lbU8RiZGIU7oNDy0f+9G1OXlLn0/CiTZTcTrRElVMevqsSE6TGuwBla8RmlOok8CGgkMjMlDl/yYsKpIpwCNHXE7N8ZZxC0d3ByVfQs5oPJxi2NXh/H43U2wmX80p2o0XEhhtrOc46UmM5/OvBDI8ifdzWRCU6fkJBYJrdqfrUWFB8LvWQVq1vr/oZ1Qg+h65G1gqKi10apzm2sPLo3zv4z1TXvO4h6vskQ8Pql9KW6bBlNORs4GoQkZ9oZ2qMveOQ5WTFbGHvGQRfX1CUzuhDfF+KDU3pbYMDFdlCj4PDfVpzj2uqJMAxQ+9tSanhz4/BUpFN0UemxRCwIEuvGqb4gRGehfTXX/Iws12mIOkyn+tCZEGv3XoeRHujWiC7/DOsmKfsmXHlKx5K5MT3m9ZZEpV81gvxjMp/CH5+3y+B5cRbKgzRLcPAgzQCnq8FNaPHOepjrKJtiLfhV5ytdjXGAh/5cheY+nGOeAxnP6YfildfKwYRsuo+TCAvl4xNzWCSZetks3Kuv/072vD3Xmd5s8NO22Bo0=
+before_install:
+- pip install --user awscli
+- export PATH=$PATH:$HOME/.local/bin
 script:
-    - gradle clean build sonarqube
-after_success:
-    - gradle cobertura coveralls
+- aws configure list
+- eval $(aws ecr get-login --no-include-email --region us-west-2)
+- docker build -t tourpark-postgres docker
+- docker images
+- docker tag tourpark-postgres:latest 816075117543.dkr.ecr.us-west-2.amazonaws.com/tourpark-postgres:latest
+- docker images
+- docker push 816075117543.dkr.ecr.us-west-2.amazonaws.com/tourpark-postgres:latest
