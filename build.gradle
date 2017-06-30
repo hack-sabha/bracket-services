@@ -60,7 +60,7 @@ dependencies {
 
 sonarqube {
     properties {
-        property "sonar.projectName", "Java :: Tournament Park :: Tournament-Services"
+        property "sonar.projectName", "Tournament Park : Tournament-Services"
         property "sonar.host.url", "https:/sonarqube.com"
         property "sonar.organization", "swaroopg-github"
         property "sonar.login", "58a16cb35ec483abf7448919003da7587ebc83ee"
