@@ -21,7 +21,7 @@ after_success:
   - gradle cobertura coveralls
   - echo $COMMIT
   - docker images
-  - gradle buildDocker
+  - gradle buildDocker -x test
   - docker login -e="swarooprajg@gmail.com" -u="swarooprajg" -p="TourPark"
   - docker build -t $POSTGRESREPO:latest docker/postgres
   - docker tag tournament-services:latest $SERVICESREPO:latest

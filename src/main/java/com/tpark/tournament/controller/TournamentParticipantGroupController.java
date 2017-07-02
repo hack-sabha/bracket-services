@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.tpark.tournament.dataaccess.ParticipantRepository;
@@ -23,7 +22,6 @@ import com.tpark.tournament.resource.ParticipantGroupResource;
 
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/tournament/{tournamentId}/participants")
 public class TournamentParticipantGroupController {
     private static Logger LOGGER = Logger.getLogger(TournamentParticipantGroupController.class);
 
@@ -33,8 +31,14 @@ public class TournamentParticipantGroupController {
     @Autowired
     private ParticipantRepository participantRepository;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, value = "/service/tournament/{tournamentId}/participants")
+    @ApiOperation(tags = {"Tournament APIs"}, value = "Add Participants to Tournament", nickname = "AddTournamentParticipants")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Success", response = Tournament.class),
+        @ApiResponse(code = 404, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Failure")})
     public ResponseEntity<Tournament> add(@PathVariable long tournamentId, @RequestBody ParticipantGroup participantGroup) {
+        LOGGER.info(String.format("Adding participants to tournament[%s].", tournamentId));
 
         // TODO validate names, generate random seeds
         Tournament tournament = validateTournament(tournamentId);
@@ -49,8 +53,14 @@ public class TournamentParticipantGroupController {
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().build().toUri()).build();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, value = "/service/tournament/{tournamentId}/participants")
+    @ApiOperation(tags = {"Tournament APIs"}, value = "Get Tournament Participants", nickname = "GetTournamentParticipants")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Success", response = ParticipantGroupResource.class),
+        @ApiResponse(code = 404, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Failure")})
     public ParticipantGroupResource read(@PathVariable long tournamentId) {
+        LOGGER.info(String.format("Adding participants to tournament[%s].", tournamentId));
         validateTournament(tournamentId);
         ParticipantGroup participantGroup = new ParticipantGroup();
         participantGroup.setParticipants(participantRepository.findByTournamentId(tournamentId));

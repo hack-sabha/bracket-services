@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
@@ -38,23 +39,22 @@ public class TournamentITest {
     private TestRestTemplate template;
 
     // TODO This works in local but fails on Travis :(
-    Map<Long, Tournament> tournamentByIdMap;
+    Collection<Long> tournamentIds = new ArrayList<>(1);
 
     @Before
     public void setup() {
-        tournamentByIdMap = Maps.newHashMap();
         createTournament("Cricket");
     }
 
     @After
     public void tearDown() {
-        deleteTournament(tournamentByIdMap.keySet());
+        deleteTestTournaments();
     }
 
     @Test
     public void retrieveSingleTournament() {
         // end-to-end test
-        ResponseEntity<String> response = template.getForEntity("/tournaments/search?term=TestTournament", String.class);
+        ResponseEntity<String> response = template.getForEntity("/service/tournaments/search?term=TestTournament", String.class);
         LOGGER.info("------ RESPONSE ------\n" + response);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
         assertThat(response.getBody(), containsString("TestTournament"));
@@ -64,11 +64,19 @@ public class TournamentITest {
     public void retrieveMultipleTournaments() {
         createTournament("Tennis");
         // end-to-end test
-        ResponseEntity<String> response = template.getForEntity("/tournaments/search?term=TestTournament", String.class);
+        ResponseEntity<String> response = template.getForEntity("/service/tournaments/search?term=TestTournament", String.class);
         LOGGER.info("------ RESPONSE ------\n" + response);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
         assertThat(response.getBody(), containsString("TestTournamentCricket"));
         assertThat(response.getBody(), containsString("TestTournamentTennis"));
+    }
+
+    @Test
+    public void retrieveAllTournaments() {
+        // end-to-end test
+        ResponseEntity<String> response = template.getForEntity("/service/tournaments/all", String.class);
+        LOGGER.info("------ RESPONSE ------\n" + response);
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
 
     public void createTournament(String sportName) {
@@ -80,11 +88,11 @@ public class TournamentITest {
         Tournament tournament = new Tournament("TestTournament" + sportName, 1, sport, 1);
         tournamentRepository.save(tournament);
         System.out.println(tournament.toString());
-        //tournamentByIdMap.put(tournament.getTournamentId(), tournament);
+        tournamentIds.add(tournament.getId());
     }
 
-    public void deleteTournament(Collection<Long> tournamentIds) {
-        LOGGER.info(" --- DELETING TOURNAMENTS ------ " + tournamentIds.toString());
+    public void deleteTestTournaments() {
+        LOGGER.info(" --- DELETING TOURNAMENTS ------ ");
         for (Long id : tournamentIds) {
             tournamentRepository.delete(id);
         }

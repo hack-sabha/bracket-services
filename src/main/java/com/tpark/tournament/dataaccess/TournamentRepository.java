@@ -1,9 +1,10 @@
 package com.tpark.tournament.dataaccess;
 
-import com.tpark.tournament.entity.Tournament;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import com.tpark.tournament.entity.Tournament;
 
 /**
  * JPA Respository interface for 'tournaments' table.
