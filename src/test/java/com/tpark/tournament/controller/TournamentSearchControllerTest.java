@@ -44,7 +44,7 @@ public class TournamentSearchControllerTest {
         when(tournamentRepository.findAll()).thenReturn(Lists.newArrayList(mockTournament));
 
         MockMvcResponse actualResponse = RestAssuredMockMvc.given().mockMvc(mockMvc)
-            .when().get("/tournaments/all").then().statusCode(200).extract().response();
+            .when().get("/service/tournaments/all").then().statusCode(200).extract().response();
         Assert.assertTrue(actualResponse.asString().contains("CricketTournament"));
     }
 

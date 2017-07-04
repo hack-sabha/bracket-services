@@ -34,7 +34,7 @@ public class RefRoundControllerTest {
         MockMvc mockMvc = standaloneSetup(refRoundController).build();
         when(refRoundRepository.findAll()).thenReturn(Lists.newArrayList(new Round("Final")));
 
-        MockMvcResponse actualResponse = RestAssuredMockMvc.given().contentType(ContentType.JSON).mockMvc(mockMvc).when().get("/rounds").then().statusCode(200).extract().response();
+        MockMvcResponse actualResponse = RestAssuredMockMvc.given().contentType(ContentType.JSON).mockMvc(mockMvc).when().get("/service/rounds").then().statusCode(200).extract().response();
 
         Assert.assertTrue(actualResponse.asString().contains("Final"));
     }

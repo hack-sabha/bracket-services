@@ -2,20 +2,13 @@ package com.tpark.tournament.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tournament_teams")
-public class Team  implements Serializable {
+public class Team implements Serializable {
     private static final long serialVersionUID = 3363957270678118151L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

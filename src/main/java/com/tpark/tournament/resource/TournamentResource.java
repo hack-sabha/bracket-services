@@ -20,7 +20,6 @@ public class TournamentResource extends ResourceSupport {
         this.add(linkTo(methodOn(TournamentParticipantGroupController.class).add(tournament.getId(), null)).withRel("addParticipants"));
         this.add(linkTo(methodOn(TournamentTeamController.class).add(tournament.getId(), null)).withRel("addTeams"));
         this.add(linkTo(methodOn(TournamentBracketController.class).read(tournament.getId())).withRel("getBracket"));
-
     }
 
     public Tournament getTournament() {
